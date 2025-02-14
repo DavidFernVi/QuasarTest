@@ -210,6 +210,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5753050262530699338}
   - component: {fileID: 7187363271489123151}
+  - component: {fileID: 5365815517060312618}
+  - component: {fileID: 2595093214732487522}
+  - component: {fileID: 8572774130864296304}
   m_Layer: 0
   m_Name: Cat cookie
   m_TagString: Untagged
@@ -243,6 +246,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ede258747f2c66543a162536f3344196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &5365815517060312618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044945487355024555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3574467, y: 1.5544581, z: 0.8595098}
+  m_Center: {x: -0.034040134, y: 0.6993983, z: 0.07024511}
+--- !u!114 &2595093214732487522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044945487355024555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce17c274b57916b47abb99690d24b5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8572774130864296304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044945487355024555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a102c0e6c1551434e96a3a8f3eaed0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7208969040968280511
