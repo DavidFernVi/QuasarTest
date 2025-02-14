@@ -11,6 +11,9 @@ public class CookiesController : MonoBehaviour
     [Header("Audio Clips")]
     public AudioClip audioClipDog, audioClipCat;
 
+    [Header("Canvas UI")]
+    public UICookies uiCookies;
+
     private AudioSource audioSource;
 
     private void Start()
@@ -21,6 +24,8 @@ public class CookiesController : MonoBehaviour
     public void AddDogCookie()
     {
         numDogCookies++;
+
+        uiCookies.UpdateUI();
 
         if (audioClipDog != null)
         {
@@ -34,11 +39,23 @@ public class CookiesController : MonoBehaviour
     {
         numCatCookies++;
 
+        uiCookies.UpdateUI();
+
         if (audioClipCat != null)
         {
             audioSource.Stop();
             audioSource.clip = audioClipCat;
             audioSource.Play();
         }
+    }
+
+    public int GetCatCookies()
+    {
+        return numCatCookies;
+    }
+
+    public int GetDogCookies()
+    {
+        return numDogCookies;
     }
 }
