@@ -13,7 +13,7 @@ public class DogCookie : MonoBehaviour, IInteractuableObj
     
     public void Interact()
     { 
-        cookiesController.AddDogCookie();
+        cookiesController.AddDogCookie(gameObject);
         Destroy(gameObject);
     }
 }

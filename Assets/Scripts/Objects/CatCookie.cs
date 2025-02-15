@@ -13,7 +13,7 @@ public class CatCookie : MonoBehaviour, IInteractuableObj
     
     public void Interact()
     {
-        cookiesController.AddCatCookie();
+        cookiesController.AddCatCookie(gameObject);
         Destroy(gameObject);
     }
 }

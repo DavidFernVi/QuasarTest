@@ -16,12 +16,14 @@ public class CookiesController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    public CookiesGenerator cookiesGenerator;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void AddDogCookie()
+    public void AddDogCookie(GameObject cookie)
     {
         numDogCookies++;
 
@@ -33,9 +35,11 @@ public class CookiesController : MonoBehaviour
             audioSource.clip = audioClipDog;
             audioSource.Play();
         }
+
+        cookiesGenerator.RemoveCookie(cookie);
     }
 
-    public void AddCatCookie()
+    public void AddCatCookie(GameObject cookie)
     {
         numCatCookies++;
 
@@ -47,6 +51,8 @@ public class CookiesController : MonoBehaviour
             audioSource.clip = audioClipCat;
             audioSource.Play();
         }
+
+        cookiesGenerator.RemoveCookie(cookie);
     }
 
     public int GetCatCookies()
