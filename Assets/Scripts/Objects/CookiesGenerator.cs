@@ -12,8 +12,9 @@ public class CookiesGenerator : MonoBehaviour
     List<GameObject> cookiesList = new List<GameObject>();
 
     [Header("Prefabs")]
-    public GameObject dogCookiePrefab;
-    public GameObject catCookiePrefab;
+    public GameObject dogCookiePrefab, catCookiePrefab;
+
+    public GameObject dogCookiesSpawn, catCookiesSpawn;
 
 
     void Start()
@@ -21,27 +22,42 @@ public class CookiesGenerator : MonoBehaviour
         StartCoroutine(AddNewCookie());
     }
 
-    private void GenerateCookie(GameObject cookiePrefab){
-        GameObject newCookie = Instantiate(cookiePrefab, new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f)), Quaternion.identity);
+    private void GenerateCookie(GameObject cookiePrefab, GameObject goCookiesSpawn){ 
+        CookiesSpawn cookiesSpawn = goCookiesSpawn.GetComponent<CookiesSpawn>();
+        Vector3 planeSize = cookiesSpawn.GetPlaneSize();
+        Vector3 newRandomPosition = cookiesSpawn.GetRandomPositionOnPlane(planeSize);
+        GameObject newCookie = Instantiate(cookiePrefab, newRandomPosition, Quaternion.identity);
         cookiesList.Add(newCookie);
     }
 
     // Función que decide que cookie se genera en función de la cantidad de cookies de cada tipo
     private void CheckCookie(){
-        GameObject selectedPrefab;
+        GameObject selectedPrefab, cookiesSpawn;
 
         int numDogCookies = cookiesList.FindAll(cookie => cookie.tag == "DogCookie").Count;
         int numCatCookies = cookiesList.FindAll(cookie => cookie.tag == "CatCookie").Count;
 
         if(numDogCookies < numCatCookies){
             selectedPrefab = dogCookiePrefab;
+            cookiesSpawn = dogCookiesSpawn;
         }else if(numDogCookies > numCatCookies){
             selectedPrefab = catCookiePrefab;
+            cookiesSpawn = catCookiesSpawn;
         }else{
-            selectedPrefab = Random.Range(0, 2) == 0 ? dogCookiePrefab : catCookiePrefab;
+            // Si están iguales, elegimos aleatoriamente
+            if (Random.Range(0, 2) == 0)
+            {
+                selectedPrefab = dogCookiePrefab;
+                cookiesSpawn = dogCookiesSpawn;
+            }
+            else
+            {
+                selectedPrefab = catCookiePrefab;
+                cookiesSpawn = catCookiesSpawn;
+            }
         }   
 
-        GenerateCookie(selectedPrefab);
+        GenerateCookie(selectedPrefab, cookiesSpawn);
     }
 
     IEnumerator AddNewCookie(){
