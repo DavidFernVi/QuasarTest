@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CookiesSpawn : MonoBehaviour
 {
+    public float offset = 1.0f;
+
     public Vector3 GetPlaneSize()
     {
         // El plano de Unity tiene una escala base de 10x10, así que multiplicamos por su escala
@@ -23,6 +25,7 @@ public class CookiesSpawn : MonoBehaviour
         float randomZ = Random.Range(-planeSize.z / 2, planeSize.z / 2);
 
         // Devolver la posición final en coordenadas globales
-        return transform.position + new Vector3(randomX, 3, randomZ);
+        // El offset lo añadimos para que no estén a ras de suelo
+        return transform.position + new Vector3(randomX, transform.position.y + offset, randomZ);
     }
 }
