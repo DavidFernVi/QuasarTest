@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Clase que representa un spawn de cookies
 public class CookiesSpawn : MonoBehaviour
 {
+    // Variable de offset para que las cookies no estén a ras de suelo
     public float offset = 1.0f;
 
+    // Método que devuelve el tamaño del plano
     public Vector3 GetPlaneSize()
     {
         // El plano de Unity tiene una escala base de 10x10, así que multiplicamos por su escala
@@ -18,6 +21,7 @@ public class CookiesSpawn : MonoBehaviour
         return size;
     }
 
+    // Método que devuelve una posición aleatoria en el plano
     public Vector3 GetRandomPositionOnPlane(Vector3 planeSize)
     {
         // Calcular posición aleatoria dentro de los límites del plano

@@ -2,34 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script para mover y rotar al jugador
 public class PlayerMove : MonoBehaviour
 {
+    // Referencias
     [Header("References")]
     public Rigidbody rb;
     public Transform head;
 
+    // Configuraciones
     [Header("Configurations")]
     public float walkSpeed;
     public float mouseSensitivity;
 
+    // Variables
     private float verticalRotation = 0;
 
+    // Inicialización
     void Start()
     {
+        // Ocultamos y bloqueamos el cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    // Actualización
     void FixedUpdate()
     {
         MoverPlayer();
     }
 
+    // Actualización
     void Update()
     {
         RotatePlayer();
     }
 
+    // Método para mover al jugador
     private void MoverPlayer()
     {
         // Capturamos la entrada del jugador
