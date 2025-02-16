@@ -29,7 +29,7 @@ Assets/Scripts:
 Player: Lógica de movimiento y rotación del jugador.
 Objects: Controladores y scripts de interacción con las galletas.
 Canvas: Gestión de la interfaz de usuario (UI) para puntuaciones.
-Assets/Prefabs: Prefabs de las galletas y el jugador.
+Assets/Prefabs: Prefabs de las galletas.
 
 Assets/Materials: Materiales para el entorno.
 
