@@ -2,27 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Interfaz que define un método de interacción
+// Clase que activa la interacción al entrar en un trigger
 public class InteractObjTrigger : MonoBehaviour
 {
-    // Referencia al objeto interactuable
-    private IInteractuableObj interactable; 
+    [Tooltip("Etiqueta del objeto que puede activar la interacción")]
+    public string targetTag = "Player";
 
-    // Método que se ejecuta al iniciar el script
-    void Start()
+    // Referencia al objeto interactuable
+    private IInteractuableObj interactable;
+
+    // Método que se ejecuta al iniciar la escena
+    private void Awake()
     {
-        // Obtiene el componente interactuable del objeto
+        // Intenta obtener el componente interactuable
         interactable = GetComponent<IInteractuableObj>();
+
+        // Validamos si el objeto tiene la interfaz
+        if (interactable == null)
+        {
+            Debug.LogWarning($"El objeto {gameObject.name} no tiene un componente que implemente IInteractuableObj.");
+        }
     }
 
     // Método que se ejecuta al entrar en el trigger
     private void OnTriggerEnter(Collider other)
     {
-        // Si el objeto que entra en el trigger es el jugador
-        if (other.CompareTag("Player"))
+        // Verificar si el objeto que entra tiene la etiqueta correcta
+        if (other.CompareTag(targetTag))
         {
-            // Interactúa con el objeto
-            interactable.Interact();
+            // Verificar que interactable no sea nulo antes de usarlo
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
+            else
+            {
+                Debug.LogError($"Intento de interactuar con un objeto sin IInteractuableObj: {gameObject.name}");
+            }
         }
     }
 }

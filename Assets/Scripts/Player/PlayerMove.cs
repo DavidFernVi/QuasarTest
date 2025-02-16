@@ -2,68 +2,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Script para mover y rotar al jugador
+// Control de movimiento y rotación del jugador
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMove : MonoBehaviour
 {
     // Referencias
     [Header("References")]
-    public Rigidbody rb;
+    [Tooltip("Cabeza del jugador para controlar la rotación vertical")]
     public Transform head;
 
     // Configuraciones
-    [Header("Configurations")]
-    public float walkSpeed;
-    public float mouseSensitivity;
+    [Header("Movement Settings")]
+    [Tooltip("Velocidad de movimiento del jugador")]
+    [Range(1f, 20f)]
+    public float walkSpeed = 5f;
 
-    // Variables
-    private float verticalRotation = 0;
+    [Header("Look Settings")]
+    [Tooltip("Sensibilidad del ratón")]
+    [Range(50f, 500f)]
+    public float mouseSensitivity = 200f;
 
-    // Inicialización
-    void Start()
+    // Variables privadas
+    private Rigidbody rb;
+    private float verticalRotation = 0f;
+
+    // Inicialización al inicio del juego
+    private void Awake()
     {
-        // Ocultamos y bloqueamos el cursor
+        // Obtener el componente Rigidbody
+        rb = GetComponent<Rigidbody>();
+    }
+
+    // Inicialización al inicio del script
+    private void Start()
+    {
+        // Ocultamos y bloqueamos el cursor para el control de cámara
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Actualización
-    void FixedUpdate()
+    // Lógica de entrada y rotación
+    private void Update()
     {
-        MoverPlayer();
+        RotateCamera();
     }
 
-    // Actualización
-    void Update()
+    // Movimiento del jugador. Usamos FixedUpdate para físicas más precisas
+    private void FixedUpdate()
     {
-        RotatePlayer();
+        MovePlayer();
     }
 
     // Método para mover al jugador
-    private void MoverPlayer()
+    private void MovePlayer()
     {
-        // Capturamos la entrada del jugador
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        // Capturamos la entrada del jugador. Usamos GetAxisRaw para evitar problemas con la sensibilidad del mando
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
 
-        // Calculamos la dirección relativa a la cámara
+        // Calculamos la dirección relativa a la orientación del jugador
         Vector3 moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized;
-        moveDirection.y = 0; // Evitamos movimiento vertical involuntario
 
-        // Aplicamos la velocidad manteniendo el eje Y para el salto
-        Vector3 targetVelocity = moveDirection * walkSpeed;
-        rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
+        // Aplicamos la velocidad sin afectar el eje Y
+        Vector3 targetVelocity = new Vector3(moveDirection.x * walkSpeed, rb.velocity.y, moveDirection.z * walkSpeed);
+        rb.velocity = targetVelocity;
     }
 
-    private void RotatePlayer()
+    // Método para rotar la cámara
+    private void RotateCamera()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;	
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        // Capturamos la entrada del ratón
+        // Usamos GetAxisRaw para evitar problemas con la sensibilidad del ratón
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        Vector3 newRotation = new Vector3(0, mouseX, 0);
-        transform.Rotate(newRotation); // Giramos el cuerpo del jugador
+        // Rotación horizontal del jugador
+        transform.Rotate(Vector3.up * mouseX);
 
-        verticalRotation -= mouseY; // Invertimos el eje Y para un control natural
-        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f); // Limitamos la rotación vertical
+        // Rotación vertical de la cámara
+        verticalRotation -= mouseY;
+        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
 
         // Aplicamos la rotación solo a la cabeza
         head.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);

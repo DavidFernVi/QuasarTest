@@ -11,15 +11,17 @@ public class CatCookie : MonoBehaviour, IInteractuableObj
     // Método que se ejecuta al iniciar el script
     void Start()
     {
-        // Obtiene el controlador de cookies
+        // Obtiene el controlador de cookies buscando en la escena
         cookiesController = FindObjectOfType<CookiesController>();
     }
     
     // Método que se ejecuta al interactuar con la cookie
     public void Interact()
     {
-        // Añade una cookie de gato y elimina la cookie de la escena
-        cookiesController.AddCatCookie(gameObject);
+        // Añade una cookie de gato utilizando el controlador
+        cookiesController.AddCookie(gameObject, CookiesController.CookieType.Cat);
+
+        // Elimina la cookie del juego
         Destroy(gameObject);
     }
 }

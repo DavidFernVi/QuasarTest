@@ -19,7 +19,9 @@ public class DogCookie : MonoBehaviour, IInteractuableObj
     public void Interact()
     { 
         // Añade una cookie de perro y elimina la cookie de la escena
-        cookiesController.AddDogCookie(gameObject);
+        cookiesController.AddCookie(gameObject, CookiesController.CookieType.Dog);
+
+        // Elimina la cookie del juego
         Destroy(gameObject);
     }
 }

@@ -357,10 +357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3515039092ae3b146b350bbc21c172f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 267810733}
   head: {fileID: 770378479}
   walkSpeed: 5
-  mouseSensitivity: 1
+  mouseSensitivity: 150
 --- !u!136 &267810729
 CapsuleCollider:
   m_ObjectHideFlags: 0

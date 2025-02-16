@@ -3,31 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-// Clase que gestiona la interfaz de usuario relacionada con las cookies de perros y gatos
+// Clase que gestiona la interfaz de usuario relacionada con las cookies
 public class UICookies : MonoBehaviour
 {
-    // Referencias a los elementos de texto en la UI para mostrar las cookies
     [Header("UI References")]
-    public TextMeshProUGUI dogCookiesText, catCookiesText;
+    public TextMeshProUGUI dogCookiesText;
+    public TextMeshProUGUI catCookiesText;
 
-    // Referencia al controlador que gestiona la lógica de las cookies
     [Header("References")]
     public CookiesController cookiesController;
+
+    // Valores anteriores para evitar actualizaciones innecesarias
+    private int previousDogCookies = -1;
+    private int previousCatCookies = -1;
 
     // Método que se ejecuta al iniciar el script
     private void Start()
     {
-        // Actualiza la interfaz de usuario con los valores actuales
+        // Comprobamos que las referencias estén asignadas
+        if (cookiesController == null)
+        {
+            Debug.LogError("CookiesController no asignado en " + gameObject.name);
+            return;
+        }
+
+        // Comprobamos que los TextMeshProUGUI estén asignados
+        if (dogCookiesText == null || catCookiesText == null)
+        {
+            Debug.LogError("Algún TextMeshProUGUI no está asignado en " + gameObject.name);
+            return;
+        }
+
+        // Actualiza la interfaz al inicio
         UpdateUI();
     }
 
     // Método para actualizar los textos de las cookies en la UI
     public void UpdateUI()
     {
-        // Muestra el número de cookies de perros obteniéndolo del controlador
-        dogCookiesText.text = cookiesController.GetDogCookies().ToString();
+        // Obtenemos los valores actuales de cookies
+        int currentDogCookies = cookiesController.GetDogCookies();
+        int currentCatCookies = cookiesController.GetCatCookies();
 
-        // Muestra el número de cookies de gatos obteniéndolo del controlador
-        catCookiesText.text = cookiesController.GetCatCookies().ToString();
+        // Solo actualizamos el texto si el valor ha cambiado
+        if (currentDogCookies != previousDogCookies)
+        {
+            dogCookiesText.text = $"{currentDogCookies}";
+            previousDogCookies = currentDogCookies;
+        }
+
+        if (currentCatCookies != previousCatCookies)
+        {
+            catCookiesText.text = $"{currentCatCookies}";
+            previousCatCookies = currentCatCookies;
+        }
     }
 }

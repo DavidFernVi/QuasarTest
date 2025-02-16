@@ -2,24 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Script para rotar un objeto periódicamente
+// Script para rotar un objeto en cualquier eje
 public class ObjectRotation : MonoBehaviour
 {
-    // Configuraciones de rotación
     [Header("Rotation Settings")]
-    private float rotationSpeed = 50.0f;
-    private float currentRotation = 0.0f;
+    [Tooltip("Velocidad de rotación en grados por segundo")]
+    [SerializeField] private float rotationSpeed = 50.0f;
+
+    [Tooltip("Eje de rotación del objeto")]
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+
+    [Tooltip("¿Debe rotar automáticamente?")]
+    [SerializeField] private bool isRotating = true;
 
     // Actualización
-    void Update()
+    private void Update()
     {
-        // Rotamos el objeto
-        currentRotation += rotationSpeed * Time.deltaTime;
-
-        // Mantenemos el ángulo entre 0 y 360
-        currentRotation = Mathf.Repeat(currentRotation, 360);
-
-        // Aplicamos la rotación
-        transform.rotation = Quaternion.Euler(0, currentRotation, 0);
+        // Si la rotación está habilitada, rotamos el objeto
+        if (isRotating)
+        {
+            RotateObject();
+        }
     }
+
+    // Método para rotar el objeto
+    private void RotateObject()
+    {
+        // Aplicamos la rotación directamente
+        transform.Rotate(rotationAxis.normalized * rotationSpeed * Time.deltaTime);
+    }
+
+    // Métodos públicos para controlar la rotación
+    public void StartRotation() => isRotating = true;
+    public void StopRotation() => isRotating = false;
+    public void SetRotationSpeed(float speed) => rotationSpeed = speed;
+    public void SetRotationAxis(Vector3 axis) => rotationAxis = axis;
 }
